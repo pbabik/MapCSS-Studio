@@ -5,7 +5,8 @@
   <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/black-tie/jquery-ui.css" />
   <script src="leaflet/leaflet.js"></script>
   <script src="kothic/kothic.min.js"></script>
-  <script src="kothic/kothic-leaflet.js"></script>
+  <script src="kothic/kothic-leaflet.js"></script> 
+  <script src="styles/osmosnimki.js"></script>
   
   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>  
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
@@ -19,9 +20,7 @@
       <div id="map" style="height:100%; width:100%"></div>
     </td>
     <td height=30>
-      <button onclick="update_mapnik('ru');">Submit</button>
-      <input type="checkbox" id="fixatebox">
-      <span id="bbox"></span>
+      <button id="save">Submit</button>
     </td>
     <td width="60">
       <span id="status" align="right">&nbsp;</span>
@@ -53,31 +52,16 @@ window.onload = function() {
     changed = false;
 
     
-		var map = new L.Map('map', {
-			center: new L.LatLng(53.9, 27.55), // Minsk
-			zoom: 12
+    var map = new L.Map('map', {
+			center: new L.LatLng(startY, startX), // from config.js
+			zoom: startZ
 		});
-    kosmo = new L.TileLayer('http://{s}.tile.osmosnimki.ru/kosmo/{z}/{x}/{y}.png', {maxZoom: 18});
-    kosmo = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18});
-    map.addLayer(kosmo);
-    function updatebbox(){
-      if (!document.getElementById("fixatebox").checked){
-        bnd = map.getBounds();
-        bbox = ""+bnd.getSouthWest().lng.toPrecision(6)+","+bnd.getSouthWest().lat.toPrecision(6)+","+bnd.getNorthEast().lng.toPrecision(6)+","+bnd.getNorthEast().lat.toPrecision(6);
-        document.getElementById("bbox").innerText = bbox;
-      };
-    };
-		updatebbox();
-		map.on("moveend", updatebbox)
-
-		function rerender(lang) {
-      lang = lang||"ru";
-
-      var size = [Math.floor(Math.abs(map.project(bnd.getSouthWest()).x - map.project(bnd.getNorthEast()).x)), Math.floor(Math.abs(map.project(bnd.getSouthWest()).y - map.project(bnd.getNorthEast()).y))]
-      var url = "http://mapcss.osmosnimki.ru/mapcss2imgs?action=GetMap&width="+size[1]+"&height="+size[0]+"&file=preview&bbox="+bbox+"&lang="+lang;
-      var image = new L.ImageOverlay( url, bnd);
-      map.addLayer(image);
-		};
+    var kothic = new L.TileLayer.Kothic(vtileUrl, { //vtileUrl - from config.js
+            minZoom: 3,
+            styles: ['osmosnimki']
+    });
+    map.addLayer(kothic);
+    
 
     function update_mapnik(lang) {
       if (changed){
@@ -89,11 +73,10 @@ window.onload = function() {
             useFallback: true
           });
           changed = false;
-          rerender(lang);
         });
       }
       else{
-        rerender(lang);
+        
       }
 
     };
