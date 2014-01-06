@@ -1,0 +1,15 @@
+body,
+html {
+	margin:0;
+	padding:0;
+}
+
+#map {
+	width: 50%;
+	height: 84%;
+	float: left;
+}
+
+#right-pane {
+	margin-left: 50%;
+}
