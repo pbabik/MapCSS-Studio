@@ -22,8 +22,15 @@
     <td height=30>
       <button id="save">Submit</button>
     </td>
-    <td width="60">
-      <span id="status" align="right">&nbsp;</span>
+    <form method="post" action="download.php" id="postfields">
+		<input type="hidden"  name="format" id="format"/>
+		<input type="hidden"  name="mapcss" id="mapcss"/>
+	</form>
+    <td height="30">
+      <button id="css">Download as MapCSS</button>
+    </td>
+    <td height="30">
+      <button id="js">Download as JS</button>
     </td>
   </tr>
   <tr>
@@ -63,23 +70,48 @@ window.onload = function() {
     map.addLayer(kothic);
     
 
-    function update_mapnik(lang) {
-      if (changed){
-        $.post('/mapcss2imgs', {"mapcss":editor.getSession().getValue(), "action":"save", "file":"preview" },function(data) {
-          $.notify({
-            title: 'MapCSS editor',
-            message: 'Stylesheet saved on server.',
-            timeout: 2000,
-            useFallback: true
-          });
-          changed = false;
-        });
-      }
-      else{
-        
-      }
+    function updateStyle() {
 
-    };
+        $.post('./converter.php', 
+			{
+				"mapcss":editor.getSession().getValue()
+			},
+		function(data) {
+			eval(data);
+			try {
+				kothic.enableStyle('converted');
+				kothic.disableStyle('osmosnimki');
+			}
+			catch(e) {
+				alert('No luck today');
+			}
+
+        });
+      };
+      
+   function downloadStyle(type) {
+		  var form = $('#postfields');
+		  $('#format').val(type);
+		  $('#mapcss').val(editor.getSession().getValue());
+		  form.submit();
+		  $('#format').val('');
+		  $('#mapcss').val('');
+		}
+    $('#save').click(
+		function() {
+			updateStyle();
+		}
+	);
+    $('#css').click(
+		function() {
+			downloadStyle('css');
+		}
+	);
+    $('#js').click(
+		function() {
+			downloadStyle('js');
+		}
+	);
 </script>
 
 
