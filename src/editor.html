@@ -7,7 +7,7 @@
   <script src="leaflet/leaflet.js"></script>
   <script src="kothic/kothic.min.js"></script>
   <script src="kothic/kothic-leaflet.js"></script> 
-  <script src="styles/osmosnimki.js"></script>
+  <script src="styles/helloworld.js"></script>
   
   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>  
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
@@ -32,8 +32,12 @@
 				<button id="save">Submit</button>
 			</div>
 		<div id="editor" style="height: 80%; width: 50%;" >  
-canvas{fill-color:white}
-way[highway]{color:red; width:3}
+canvas{fill-color:#fff}
+way[highway]{color:#000; width:1}
+area[natural=wood],area[landuse=forest]{fill-color:#69c077}
+area[natural=water]{fill-color:#9c0f8}
+node[place=town],node[place=city]{text:name; font-size:16; font-family: DejaVu Sans Bold; text-halo-radius:1; text-color:#202020;text-halo-color:#ffffff;}
+node[place=village]{text:name; font-size:14; font-family: DejaVu Sans Book; text-halo-radius:1; text-color:#202020;text-halo-color:#ffffff;}      
       </div>
     </div>
 </div>
@@ -61,7 +65,7 @@ window.onload = function() {
 		});
     var kothic = new L.TileLayer.Kothic(vtileUrl, { //vtileUrl - from config.js
             minZoom: 3,
-            styles: ['osmosnimki']
+            styles: ['converted']
     });
     map.addLayer(kothic);
     
@@ -76,7 +80,7 @@ window.onload = function() {
 			eval(data);
 			try {
 				kothic.enableStyle('converted');
-				kothic.disableStyle('osmosnimki');
+				kothic.redraw();
 			}
 			catch(e) {
 				alert('No luck today');

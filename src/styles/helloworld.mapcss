@@ -1,0 +1,7 @@
+  
+canvas{fill-color:#fff}
+way[highway]{color:#000; width:1}
+area[natural=wood],area[landuse=forest]{fill-color:#69c077}
+area[natural=water]{fill-color:#9c0f8}
+node[place=town],node[place=city]{text:name; font-size:16; font-family: DejaVu Sans Bold; text-halo-radius:1; text-color:#202020;text-halo-color:#ffffff;}
+node[place=village]{text:name; font-size:14; font-family: DejaVu Sans Book; text-halo-radius:1; text-color:#202020;text-halo-color:#ffffff;}      
