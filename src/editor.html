@@ -3,8 +3,11 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="leaflet/leaflet.css" />
   <link rel="stylesheet" type="text/css" href="jquery.notify.css" />
+  <link rel="stylesheet" type="text/css" href="jeegoocolor/style.css" />
+  <link rel="stylesheet" type="text/css" href="jeegoopopup/skins/basic/style.css" />
   <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/black-tie/jquery-ui.css" />
-  <script src="leaflet/leaflet.js"></script>
+  <script src="leaflet/leaflet.js"></script> 
+  
   <script src="kothic/kothic.min.js"></script>
   <script src="kothic/kothic-leaflet.js"></script> 
   <script src="styles/helloworld.js"></script>
@@ -12,6 +15,8 @@
   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>  
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
   <script src="jquery.notify.js"></script>
+  <script src="jeegoocolor/jquery.jeegoocolor.1.0.0.min.js"></script>
+  <script src="jeegoopopup/jquery.jeegoopopup.1.0.0.min.js"></script>
   <script src="config.js"></script>
 </head>
 <body>
@@ -51,6 +56,18 @@ window.onload = function() {
     var MapcssMode = require("ace/mode/mapcss").Mode;
 		editor.getSession().setMode(new MapcssMode());
 		editor.getSession().on('change', function(){changed=true;});
+	  $( "button" ).button();
+      $('#color').on('click',function(){
+		  $.jeegoocolor({
+			  draggable: true,
+			  top: 50,
+			  left: 50,
+			  overlay: false,
+			  onPick: function(hexcolor) {
+				  editor.insert("#"+hexcolor);
+			  }
+			  });
+		  });
 };
 </script>
 
