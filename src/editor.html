@@ -2,9 +2,11 @@
 <html><head><title>MapCSS editor with syntax highlighting</title>
   <link rel="stylesheet" href="leaflet/leaflet.css" />
   <link rel="stylesheet" type="text/css" href="jquery.notify.css" />
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/black-tie/jquery-ui.css" />
   <script src="leaflet/leaflet.js"></script>
   
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>  
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
   <script src='jquery.notify.js'></script>
 </head>
 <body>
@@ -14,7 +16,7 @@
       <div id="map" style="height:100%; width:100%"></div>
     </td>
     <td height=30>
-      <button onclick="update_mapnik('ru');">Mapnik RU</button>
+      <button onclick="update_mapnik('ru');">Submit</button>
       <input type="checkbox" id="fixatebox">
       <span id="bbox"></span>
     </td>
